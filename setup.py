@@ -53,6 +53,9 @@ entry_points = {
         "parallel-wavegan-normalize=parallel_wavegan.bin.normalize:main",
         "parallel-wavegan-train=parallel_wavegan.bin.train:main",
         "parallel-wavegan-decode=parallel_wavegan.bin.decode:main",
+        "autovc-preprocess=autovc.bin.preprocess:main",
+        "autovc-normalize=autovc.bin.normalize:main",
+        "autovc-train=autovc.bin.train:main",
     ]
 }
 
@@ -73,7 +76,7 @@ setup(name="parallel_wavegan",
                             encoding="utf-8").read(),
       long_description_content_type="text/markdown",
       license="MIT License",
-      packages=find_packages(include=["parallel_wavegan*"]),
+      packages=find_packages(include=["parallel_wavegan*","autovc*"]),
       install_requires=install_requires,
       setup_requires=setup_requires,
       tests_require=tests_require,
