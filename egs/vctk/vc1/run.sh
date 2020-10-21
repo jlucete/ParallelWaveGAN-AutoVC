@@ -17,7 +17,7 @@ n_jobs=8      # number of parallel jobs in feature extraction
 conf=conf/autovc.v1.yaml
 
 # speaker setting
-spks="p225 p226" # all or you can choose speakers e.g., "p225 p226 p227 ..."
+spks="all" # all or you can choose speakers e.g., "p225 p226 p227 ..."
 
 # directory path setting
 download_dir=downloads # directory to save database

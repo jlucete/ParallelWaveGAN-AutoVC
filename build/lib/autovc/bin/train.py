@@ -365,7 +365,7 @@ class Collater(object):
     def __init__(self,
                  batch_max_steps=20480,
                  hop_size=256,
-                 aux_context_window=2,
+                 aux_context_window=0,
                  use_noise_input=False,
                  len_crop=128,
                  ):
@@ -390,9 +390,9 @@ class Collater(object):
         self.len_crop = len_crop
 
         # set useful values in random cutting
-        self.start_offset = aux_context_window
-        self.end_offset = -(self.batch_max_frames + aux_context_window)
-        self.mel_threshold = self.batch_max_frames + 2 * aux_context_window
+        self.start_offset = 0
+        self.end_offset = -(self.batch_max_frames)
+        self.mel_threshold = self.batch_max_frames
 
     def __call__(self, batch):
         """Convert into batch tensors.
@@ -454,11 +454,15 @@ class Collater(object):
             features, this process will be needed.
 
         """
+        
         if len(x) < len(c) * self.hop_size:
             x = np.pad(x, (0, len(c) * self.hop_size - len(x)), mode="edge")
-
+        elif len(x) > len(c) * self.hop_size:
+            x = x[:-(len(x)-len(c)*self.hop_size)]
         # check the legnth is valid
-        assert len(x) == len(c) * self.hop_size
+        if len(x) != len(c) * self.hop_size:
+            logging.warning(f"len x : {len(x)}, len c : {len(c)}")
+        #assert len(x) == len(c) * self.hop_size
 
         return x, c, e
 
